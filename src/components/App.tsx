@@ -16,14 +16,15 @@ import {
   Router,
   Routes,
 } from 'react-router-dom';
-
 import { routes } from '@/navigation/routes.tsx';
+
 
 export const App: FC = () => {
   const lp = useLaunchParams();
   const miniApp = useMiniApp();
   const themeParams = useThemeParams();
   const viewport = useViewport();
+
 
   useEffect(() => {
     return bindMiniAppCSSVars(miniApp, themeParams);

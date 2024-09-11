@@ -1,5 +1,5 @@
 import { useUtils } from '@telegram-apps/sdk-react';
-import { TonConnectButton, useTonWallet } from '@tonconnect/ui-react';
+import { TonConnectButton, useTonWallet,Locales, useTonConnectUI  } from '@tonconnect/ui-react';
 import {
   Avatar,
   Cell,
@@ -15,6 +15,46 @@ import type { FC } from 'react';
 import { DisplayData } from '@/components/DisplayData/DisplayData.tsx';
 
 import './TONConnectPage.css';
+
+export const Settings = () => {
+	const [tonConnectUI, setOptions] = useTonConnectUI();
+
+	const onLanguageChange = (lang: string) => {
+		setOptions({ language: lang as Locales });
+	};
+
+	const myTransaction = {
+		validUntil: Math.floor(Date.now() / 1000) + 60, // 60 sec
+		messages: [
+			{
+				address: "EQBBJBB3HagsujBqVfqeDUPJ0kXjgTPLWPFFffuNXNiJL0aA",
+				amount: "20000000",
+				// stateInit: "base64bocblahblahblah==" // just for instance. Replace with your transaction initState or remove
+			},
+			{
+				address: "EQDmnxDMhId6v1Ofg_h5KR5coWlFG6e86Ro3pc7Tq4CA0-Jn",
+				amount: "60000000",
+				// payload: "base64bocblahblahblah==" // just for instance. Replace with your transaction payload or remove
+			}
+		]
+	}
+
+	return (
+		<div>
+			<button onClick={() => tonConnectUI.sendTransaction(myTransaction)}>
+				Send transaction
+			</button>
+
+			<div>
+				<label>language</label>
+				<select onChange={e => onLanguageChange(e.target.value)}>
+					<option value="en">en</option>
+					<option value="ru">ru</option>
+				</select>
+			</div>
+		</div>
+	);
+};
 
 export const TONConnectPage: FC = () => {
   const wallet = useTonWallet();
@@ -60,6 +100,7 @@ export const TONConnectPage: FC = () => {
               after={<Navigation>About wallet</Navigation>}
               subtitle={wallet.appName}
               onClick={(e) => {
+
                 e.preventDefault();
                 utils.openLink(wallet.aboutUrl);
               }}
@@ -94,6 +135,7 @@ export const TONConnectPage: FC = () => {
           },
         ]}
       />
+		<Settings />
     </List>
   );
 };
