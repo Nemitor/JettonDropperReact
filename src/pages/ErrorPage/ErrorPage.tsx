@@ -1,6 +1,7 @@
 import { FC,CSSProperties  } from 'react';
 import cleaningGif from '../../resources/gif/Cleaning.gif'
 
+
 const styles: { container: CSSProperties; gif: CSSProperties } = {
 	container: {
 		display: 'flex',
@@ -17,13 +18,13 @@ const styles: { container: CSSProperties; gif: CSSProperties } = {
 		marginBottom: '20px',
 	},
 };
-
-export const HomePage: FC = () => {
+export const ErrorPage: FC = () => {
 	return (
 		<div style={styles.container}>
 			<img src={cleaningGif} alt="Loading GIF" style={styles.gif} />
 			<h1>{'Oops!'}</h1>
-			<p>{"The server may not be responding to requests.\n We're already working on the problem!"}</p>
+			<p>{"The server may not be responding to requests."}</p>
+			<p>{"We're already working on the problem!"}</p>
 		</div>
 	);
 };
