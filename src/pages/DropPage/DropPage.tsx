@@ -2,6 +2,8 @@ import { FC, useState, useEffect } from 'react';
 import {ErrorPage} from "@/pages/ErrorPage/ErrorPage.tsx";
 import walletPng from "@/resources/images/wallet.png"
 import './DropPage.css';
+import {useTonConnectUI, useTonWallet} from "@tonconnect/ui-react";
+import eruda from 'eruda'
 
 interface Drop {
 	_id: string;
@@ -14,7 +16,9 @@ export const DropPage: FC = () => {
 	const [drops, setDrops] = useState<Drop[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-
+	const wallet = useTonWallet();
+	const [tonConnectUI] = useTonConnectUI();
+	eruda.init()
 	useEffect(() => {
 		const fetchDrops = async () => {
 			try {
@@ -44,15 +48,15 @@ export const DropPage: FC = () => {
 	}
 
 	const connectWallet = () => {
-		console.log("Подключение кошелька...");
-		// Здесь может быть логика подключения через Web3 или другой метод
+		tonConnectUI.openModal().then()
 	};
+
 
 	return (
 		<div className="container">
 			<button className="connectButton" onClick={connectWallet}>
 				<img src={walletPng} alt="wallet"/>
-				Подключить кошелек
+				{wallet ? 'Кошелек подключен' : 'Подключить кошелек'}
 			</button>
 			<h1 className="title">Active Drops</h1>
 			<ul className="dropList">
