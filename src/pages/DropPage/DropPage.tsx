@@ -12,6 +12,8 @@ interface Drop {
 	icon: string;
 }
 
+const hostName = "nemitor.ru:3000"
+
 export const DropPage: FC = () => {
 	const [drops, setDrops] = useState<Drop[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -22,7 +24,7 @@ export const DropPage: FC = () => {
 	useEffect(() => {
 		const fetchDrops = async () => {
 			try {
-				const response = await fetch('http://roodewald.keenetic.pro:3000/api/getActiveDrops');
+				const response = await fetch(`https://${hostName}/api/getActiveDrops`);
 				if (!response.ok) {
 					throw new Error(`Error: ${response.status}`);
 				}
